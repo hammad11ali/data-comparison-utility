@@ -1,0 +1,17 @@
+.input-area {
+  display: flex;
+  height: 80vh; /* Full height of the viewport */
+}
+
+app-input {
+  flex: 1; /* Take equal space */
+  height: 100%; /* Full height */
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    width: 150px;
+  }
+}

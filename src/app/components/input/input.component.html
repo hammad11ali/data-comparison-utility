@@ -1,0 +1,35 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Source</mat-card-title>
+    </mat-card-header>
+  <mat-card-content>
+    <div class="file-field">
+    <mat-form-field class="field">
+      <mat-label>File Type</mat-label>
+      <mat-select [(value)]="selectedFileType">
+        <mat-option *ngFor="let type of fileTypes" [value]="type">{{type}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-upload (selectFile)="onSelectFile($event)"></app-upload>
+  </div>
+   <div class="field text-area">
+    <div class="label">Content...</div>
+    <mat-form-field >
+
+
+    <textarea
+    cdkTextareaAutosize
+    #autosize="cdkTextareaAutosize"
+    cdkAutosizeMinRows="20"
+    cdkAutosizeMaxRows="20"
+    matInput class="content"
+    [(ngModel)]="content"
+    >
+    </textarea>
+    </mat-form-field>
+   </div>
+  </mat-card-content>
+</mat-card>
+<!-- Copyright 2024 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->

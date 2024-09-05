@@ -5,13 +5,7 @@
 </h2>
 
 <mat-accordion>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Conflicting Keys </mat-panel-title>
-      <mat-panel-description>{{comparisonUtilityService.Mismatches.length}} key(s) have conflicting values</mat-panel-description>
-    </mat-expansion-panel-header>
     <app-conflicting-keys [comparisonResults]="comparisonUtilityService.Mismatches"/>
-  </mat-expansion-panel>
   <mat-expansion-panel hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title> Removed Keys </mat-panel-title>

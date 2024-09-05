@@ -1,14 +1,21 @@
 
-@for (comparisonResult of comparisonResults; track $index) {
-<p>
-  {{comparisonResult?.key}}
-</p>
-<div class="button">
-  <button (click)="useSource(comparisonResult)" mat-icon-button ><mat-icon>verified</mat-icon></button>
-  <button (click)="useTarget(comparisonResult)" mat-icon-button ><mat-icon>verified</mat-icon></button>
-</div>
-<div class="values">
-  <div>{{comparisonResult?.sourceValue}}</div>
-  <div>{{comparisonResult?.targetValue}}</div>
-</div>
-}
+
+<mat-expansion-panel hideToggle [class.resolved]="ResolvedCount==comparisonResults.length">
+  <mat-expansion-panel-header>
+    <mat-panel-title> Conflicting Keys </mat-panel-title>
+    <mat-panel-description>
+    <span>
+      {{ResolvedCount}}/{{comparisonResults.length}} key(s) has been Merged
+    </span>
+    <span>
+      <mat-icon  style="color:white">
+        {{ResolvedCount!=comparisonResults.length?'warning':'verified'}}
+      </mat-icon>
+    </span>
+
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  @for (comparisonResult of comparisonResults; track $index) {
+    <app-key-value-resolution [comparisonResult]="comparisonResult"></app-key-value-resolution>
+  }
+</mat-expansion-panel>

@@ -4,23 +4,25 @@ import { StorageKeys, StorageService } from './storage.service';
 
 
 export enum ConflictType{
-  MISSING,
-  MISMATCH,
-  EXTRA,
-  None
+  MISSING="Missing",
+  MISMATCH="Mismatch",
+  EXTRA="Extra",
+  None="None"
 }
 export enum MergeStatus{
-  Removed,
-  Source,
-  Target,
-  None
+  Removed='Removed',
+  Source='Source',
+  Target='Target',
+  New='New',
+  None='None'
 }
 export type ComparisonResult = {
   key:string,
   type:ConflictType,
   sourceValue:any,
   targetValue:any,
-  MergeStatus?:MergeStatus
+  MergeStatus?:MergeStatus,
+  newValue?:any
 }
 
 @Injectable({
@@ -63,7 +65,8 @@ export class ComparisonUtilityService {
             key:key,
             type:ConflictType.MISMATCH,
             sourceValue:sourceObj[key],
-            targetValue:targetObj[key]
+            targetValue:targetObj[key],
+            newValue:sourceObj[key]
           });
         }
         else{
@@ -71,7 +74,8 @@ export class ComparisonUtilityService {
             key:key,
             type:ConflictType.None,
             sourceValue:sourceObj[key],
-            targetValue:targetObj[key]
+            targetValue:targetObj[key],
+            newValue:sourceObj[key]
           });
         }
       }else{
@@ -79,7 +83,8 @@ export class ComparisonUtilityService {
           key:key,
           type:ConflictType.EXTRA,
           sourceValue:sourceObj[key],
-          targetValue:null
+          targetValue:null,
+          newValue:sourceObj[key]
         });
       }
     }
@@ -89,7 +94,8 @@ export class ComparisonUtilityService {
           key:key,
           type:ConflictType.MISSING,
           sourceValue:null,
-          targetValue:targetObj[key]
+          targetValue:targetObj[key],
+          newValue:targetObj[key]
         });
       }
     }
@@ -98,22 +104,35 @@ export class ComparisonUtilityService {
   get finalObject(){
     const object:any={};
     for (let i = 0; i < this.comparisonResults.length; i++) {
-      if(this.comparisonResults[i].type!==ConflictType.None){
+      if(this.comparisonResults[i].type===ConflictType.None){
         object[this.comparisonResults[i].key]=this.comparisonResults[i].sourceValue;
       }
       else if(this.comparisonResults[i].type===ConflictType.MISMATCH){
-        object[this.comparisonResults[i].key]=this.comparisonResults[i].targetValue;
+        object[this.comparisonResults[i].key]=this.getMergeResult(i, this.comparisonResults[i].sourceValue);
       }
       else if(this.comparisonResults[i].type===ConflictType.EXTRA){
         object[this.comparisonResults[i].key]=this.comparisonResults[i].sourceValue;
       }
-      else if(this.comparisonResults[i].type===ConflictType.MISMATCH){
+      else if(this.comparisonResults[i].type===ConflictType.MISSING){
         object[this.comparisonResults[i].key]=this.comparisonResults[i].targetValue;
       }
     }
     return object;
   }
 
+  getMergeResult(index:number, defaultValue:any){
+    if(this.comparisonResults[index].MergeStatus===MergeStatus.Source){
+      return this.comparisonResults[index].sourceValue;
+    }
+    else if(this.comparisonResults[index].MergeStatus===MergeStatus.Target){
+      return this.comparisonResults[index].targetValue;
+    }
+    else if(this.comparisonResults[index].MergeStatus===MergeStatus.New){
+      return this.comparisonResults[index].newValue;
+    }
+    return defaultValue;
+
+  }
   get Mismatches():ComparisonResult[]{
     return this.comparisonResults.filter((item)=>item.type===ConflictType.MISMATCH);
   }

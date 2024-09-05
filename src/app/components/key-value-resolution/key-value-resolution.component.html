@@ -1,0 +1,34 @@
+<mat-expansion-panel [class.resolved]="!isConflicted" hideToggle>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Key: {{ comparisonResult.key }} </mat-panel-title>
+    <mat-panel-description>
+    <div style="display: flex;">
+      <span>
+        {{currentMergeStatus}}
+      </span>
+      <span *ngIf="isConflicted" class="error"><mat-icon>dangerous</mat-icon></span>
+    </div>
+
+  </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div>
+    <div class="row" (click)="useSource()" [class.selected]="comparisonResult.MergeStatus==MergeStatus.Source">
+
+        <mat-icon>verified</mat-icon>
+
+      <div>Source: {{comparisonResult.sourceValue }}</div>
+    </div>
+    <div class="row" (click)="useTarget()"  [class.selected]="comparisonResult.MergeStatus==MergeStatus.Target">
+
+        <mat-icon>verified</mat-icon>
+      <div>Target: {{comparisonResult.targetValue }}</div>
+    </div>
+    <div class="row" [class.selected]="comparisonResult.MergeStatus==MergeStatus.New">
+        <mat-icon>verified</mat-icon>
+      <mat-form-field class="full-width">
+        <input (focus)="comparisonResult.MergeStatus=MergeStatus.New"  matInput placeholder="Enter Value" [(ngModel)]="comparisonResult.newValue" />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-expansion-panel>

@@ -2,10 +2,12 @@
 
 <app-input
 [content]="sourceData"
+(contentChange)="sourceData=$event"
 ></app-input>
 
 <app-input
 [content]="targetData"
+(contentChange)="targetData=$event"
 ></app-input>
 </div>
 

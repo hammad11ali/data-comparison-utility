@@ -6,7 +6,7 @@
     <div class="file-field">
     <mat-form-field class="field">
       <mat-label>File Type</mat-label>
-      <mat-select [(value)]="selectedFileType">
+      <mat-select [(value)]="selectedFileType" (selectionChange)="onFileChange()">
         <mat-option *ngFor="let type of fileTypes" [value]="type">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -24,6 +24,7 @@
     cdkAutosizeMaxRows="20"
     matInput class="content"
     [(ngModel)]="content"
+    (ngModelChange)="contentChange.emit(content)"
     >
     </textarea>
     </mat-form-field>

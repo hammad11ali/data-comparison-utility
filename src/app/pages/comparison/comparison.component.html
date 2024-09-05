@@ -1,1 +1,63 @@
-<p>comparison works!</p>
+<div class="padding-layer">
+
+<h2>
+ File Merger Review
+</h2>
+
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Conflicting Keys </mat-panel-title>
+      <mat-panel-description>{{comparisonUtilityService.Mismatches.length}} key(s) have conflicting values</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-conflicting-keys [comparisonResults]="comparisonUtilityService.Mismatches"/>
+  </mat-expansion-panel>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Removed Keys </mat-panel-title>
+      <mat-panel-description> {{comparisonUtilityService.Extra.length}} key(s) are removed</mat-panel-description>
+    </mat-expansion-panel-header>
+    <p></p>
+  </mat-expansion-panel>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Newly Added keys </mat-panel-title>
+      <mat-panel-description>{{comparisonUtilityService.Missing.length}} key(s) are Newly Added</mat-panel-description>
+    </mat-expansion-panel-header>
+    <p></p>
+  </mat-expansion-panel>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Same Keys and Values </mat-panel-title>
+      <mat-panel-description> {{comparisonUtilityService.None.length}} key(s) and values(s) are same  </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>This is the primary content of the panel.</p>
+  </mat-expansion-panel>
+</mat-accordion>
+<br>
+<div class="heading">
+  <h3>Final Result</h3>
+  <mat-form-field class="field">
+    <mat-label>File Type</mat-label>
+    <mat-select [(value)]="selectedFileType">
+      <mat-option *ngFor="let type of fileTypes" [value]="type">{{type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-form-field >
+
+
+    <textarea
+    cdkTextareaAutosize
+    #autosize="cdkTextareaAutosize"
+    cdkAutosizeMinRows="20"
+    cdkAutosizeMaxRows="20"
+    matInput class="content"
+    [(ngModel)]="content"
+    >
+    </textarea>
+    </mat-form-field>
+</div>
+</div>

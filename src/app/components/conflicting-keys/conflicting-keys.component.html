@@ -1,1 +1,14 @@
-<p>conflicting-keys works!</p>
+
+@for (comparisonResult of comparisonResults; track $index) {
+<p>
+  {{comparisonResult?.key}}
+</p>
+<div class="button">
+  <button (click)="useSource(comparisonResult)" mat-icon-button ><mat-icon>verified</mat-icon></button>
+  <button (click)="useTarget(comparisonResult)" mat-icon-button ><mat-icon>verified</mat-icon></button>
+</div>
+<div class="values">
+  <div>{{comparisonResult?.sourceValue}}</div>
+  <div>{{comparisonResult?.targetValue}}</div>
+</div>
+}

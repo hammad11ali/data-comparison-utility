@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { InputComponent } from "../../components/input/input.component";
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { StorageKeys, StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-data-input',
@@ -12,8 +14,12 @@ import { MatButtonModule } from '@angular/material/button';
 export class DataInputComponent {
   sourceData='';
   targetData='';
+  constructor(private router:Router,private storage:StorageService) { }
 
   next(){
+    this.storage.store(StorageKeys.SOURCE_DATA,this.sourceData);
+    this.storage.store(StorageKeys.TARGET_DATA,this.targetData);
 
+    this.router.navigate(['/data-comparison']);
   }
 }

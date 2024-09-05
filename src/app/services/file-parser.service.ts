@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import {XMLParser} from "fast-xml-parser";
+import { StorageKeys, StorageService } from './storage.service';
 @Injectable({
   providedIn: 'root'
 })
 export class FileParserService {
 
-  constructor() { }
+  constructor(
+    private storage:StorageService
+  ) { }
 
   parseFile(file:any, fileType:string) {
     if (fileType==='.json') {
@@ -16,6 +19,7 @@ export class FileParserService {
     return null;
   }
   parseJson(file:any) {
+    this.storage.store(StorageKeys.FileType,'.json');
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsText(file);
@@ -33,7 +37,9 @@ export class FileParserService {
   removeComments(str:string){
     return str.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1');
   }
+
   parseXml(file:any) {
+    this.storage.store(StorageKeys.FileType,'.xml');
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsText(file);
@@ -47,7 +53,10 @@ export class FileParserService {
       };
     });
   }
-  xmlStringToJSON(xml:string) {
+  jsonStrongtoObject(json:string){
+    return JSON.parse(json);
+  }
+  xmlStringToObject(xml:string) {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xml, "text/xml");
 

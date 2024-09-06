@@ -1,0 +1,12 @@
+<div class="file-area" (fileDropped)="selectFile($event)" >
+  @if(!file){
+    <input type="file" id="file" (change)="selectFile($event)" />
+    <mat-icon>upload_file</mat-icon>
+    <span class="file-name">Choose a file or drop here...</span>
+  }
+  @else {
+    <mat-icon>file_present</mat-icon>
+    <span class="file-name">{{file.name}}</span>
+    <mat-icon (click)="deleteFile()">delete</mat-icon>
+  }
+  </div>

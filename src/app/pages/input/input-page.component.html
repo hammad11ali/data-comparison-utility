@@ -1,0 +1,12 @@
+
+<header class="row">
+    <span class="header-label">Input your App Settings</span>
+    <app-select [options]="dataComparisonService.fileTypes" [selectedOption]="dataComparisonService.selectedFileType"></app-select>
+
+</header>
+<main>
+  <div class="container">
+    <app-data-input></app-data-input>
+    <app-data-input></app-data-input>
+  </div>
+</main>

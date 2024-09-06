@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {XMLParser} from "fast-xml-parser";
-import { StorageKeys, StorageService } from './storage.service';
+import { StorageKeys, StorageService } from '../services/storage.service';
 @Injectable({
   providedIn: 'root'
 })

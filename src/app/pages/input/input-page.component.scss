@@ -1,0 +1,19 @@
+header {
+  background: #d7e3ff;
+  min-height: 68px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.header-label {
+  font-size: 1.7em;
+  font-weight: 500;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 76px);
+}
+app-data-input {
+  display: contents;
+}

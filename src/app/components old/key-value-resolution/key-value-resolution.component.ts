@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { ComparisonResult, MergeStatus } from '../../services/comparison-utility.service';
+import { ComparisonResult, MergeStatus } from '../../services-old/comparison-utility.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';

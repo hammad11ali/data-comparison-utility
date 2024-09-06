@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { NgFor } from '@angular/common';
 import { UploadComponent } from '../upload/upload.component';
-import { FileParserService } from '../../services/file-parser.service';
+import { FileParserService } from '../../services-old/file-parser.service';
 import { FormsModule } from '@angular/forms';
 import { StorageKeys, StorageService } from '../../services/storage.service';
 

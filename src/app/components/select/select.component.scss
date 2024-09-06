@@ -1,0 +1,23 @@
+:host ::ng-deep {
+  .mdc-line-ripple {
+    display: none;
+  }
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+  .mdc-text-field {
+    border-radius: 5px;
+  }
+  mat-option {
+    height: 42px;
+  }
+}
+
+mat-form-field {
+  --mat-form-field-container-vertical-padding: 8px;
+  height: 42px;
+  --mdc-filled-text-field-container-color: #2f70ca;
+  --mat-select-enabled-trigger-text-color: white;
+  --mat-select-enabled-arrow-color: white;
+  --mat-select-focused-arrow-color: white;
+}

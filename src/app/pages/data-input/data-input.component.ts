@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { InputComponent } from "../../components/input/input.component";
+import { InputComponent } from "../../components old/input/input.component";
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { StorageKeys, StorageService } from '../../services/storage.service';

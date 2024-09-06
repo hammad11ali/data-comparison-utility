@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FileParserService } from './file-parser.service';
-import { StorageKeys, StorageService } from './storage.service';
+import { StorageService, StorageKeys } from '../services/storage.service';
 
 
 export enum ConflictType{

@@ -1,5 +1,5 @@
 import { Component, Input, signal, Signal } from '@angular/core';
-import { ComparisonResult, ConflictType, MergeStatus } from '../../services/comparison-utility.service';
+import { ComparisonResult, ConflictType, MergeStatus } from '../../services-old/comparison-utility.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({

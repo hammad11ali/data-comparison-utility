@@ -1,0 +1,10 @@
+.input-area {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 16px;
+  textarea {
+    height: calc(100% - 100px);
+    width: -webkit-fill-available;
+    resize: none;
+  }
+}

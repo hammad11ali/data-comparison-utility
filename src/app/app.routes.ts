@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DataInputComponent } from './pages/data-input/data-input.component';
 import { ComparisonComponent } from './pages/comparison/comparison.component';
+import { InputComponent } from './pages/input/input-page.component';
 
 export const routes: Routes = [
   {
@@ -10,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'data-input',
-    component: DataInputComponent,
+    component: InputComponent,
   },
   {
     path: 'data-comparison',

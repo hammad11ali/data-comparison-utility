@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ComparisonResult, MergeStatus } from '../../services/comparison-utility.service';
+import { ComparisonResult, MergeStatus } from '../../services-old/comparison-utility.service';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { KeyValueResolutionComponent } from '../key-value-resolution/key-value-resolution.component';

@@ -17,6 +17,7 @@ import { NgFor } from '@angular/common';
 import { UploadComponent } from '../upload/upload.component';
 import { FileParserService } from '../../services/file-parser.service';
 import { FormsModule } from '@angular/forms';
+import { StorageKeys, StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-input',
@@ -42,12 +43,13 @@ export class InputComponent {
   file: any;
   @Input() content = '';
   @Output() contentChange = new EventEmitter<string>();
-  constructor(private fileParserService: FileParserService) {}
+  constructor(private fileParserService: FileParserService,private storage:StorageService) {}
   onSelectFile(file: any) {
     this.file = file;
     this.readFile();
   }
   onFileChange() {
+    this.storage.store(StorageKeys.FileType, this.selectedFileType);
     this.readFile();
   }
   readFile() {

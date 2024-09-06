@@ -9,10 +9,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgFor } from '@angular/common';
 import { StorageKeys, StorageService } from '../../services/storage.service';
 import { ConflictingKeysComponent } from "../../components/conflicting-keys/conflicting-keys.component";
+import { NewKeysComponent } from "../../components/new-keys/new-keys.component";
+import { RemovedKeysComponent } from '../../components/removed-keys/removed-keys.component';
 @Component({
   selector: 'app-comparison',
   standalone: true,
-  imports: [ ConflictingKeysComponent,  MatExpansionModule, MatSelectModule, MatFormFieldModule, MatInputModule, TextFieldModule, FormsModule, NgFor, ConflictingKeysComponent],
+  imports: [ConflictingKeysComponent,RemovedKeysComponent, MatExpansionModule, MatSelectModule, MatFormFieldModule, MatInputModule, TextFieldModule, FormsModule, NgFor, ConflictingKeysComponent, NewKeysComponent],
   templateUrl: './comparison.component.html',
   styleUrl: './comparison.component.scss'
 })
@@ -20,7 +22,7 @@ export class ComparisonComponent implements OnInit {
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
   selectedFileType='';
-  fileTypes=[ '.json', '.xml'];
+   fileTypes=[ '.json', '.xml'];
   constructor(
     public comparisonUtilityService: ComparisonUtilityService,
     private storage:StorageService
@@ -32,10 +34,9 @@ export class ComparisonComponent implements OnInit {
 
   get content(){
     try{
-      return JSON.stringify(this.comparisonUtilityService.finalObject,null,2);
+      return this.comparisonUtilityService.objectTostring(this.selectedFileType);
     }
     catch(e){
-
       return '';
     }
 

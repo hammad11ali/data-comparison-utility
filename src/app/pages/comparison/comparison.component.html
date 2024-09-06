@@ -6,26 +6,20 @@
 
 <mat-accordion>
     <app-conflicting-keys [comparisonResults]="comparisonUtilityService.Mismatches"/>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Removed Keys </mat-panel-title>
-      <mat-panel-description> {{comparisonUtilityService.Extra.length}} key(s) are removed</mat-panel-description>
-    </mat-expansion-panel-header>
-    <p></p>
-  </mat-expansion-panel>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Newly Added keys </mat-panel-title>
-      <mat-panel-description>{{comparisonUtilityService.Missing.length}} key(s) are Newly Added</mat-panel-description>
-    </mat-expansion-panel-header>
-    <p></p>
-  </mat-expansion-panel>
+    <app-removed-keys [comparisonResults]="comparisonUtilityService.Missing"/>
+
+  <app-new-keys [comparisonResults]="comparisonUtilityService.Extra"/>
   <mat-expansion-panel hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title> Same Keys and Values </mat-panel-title>
       <mat-panel-description> {{comparisonUtilityService.None.length}} key(s) and values(s) are same  </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>This is the primary content of the panel.</p>
+    @for (comparisonResult of comparisonUtilityService.None; track $index) {
+      <div class="row">
+        <span>key: {{comparisonResult.key}}</span>
+        <span>value: {{comparisonResult.sourceValue}}</span>
+      </div>
+    }
   </mat-expansion-panel>
 </mat-accordion>
 <br>

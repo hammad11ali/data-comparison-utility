@@ -2,8 +2,13 @@ mat-expansion-panel {
   background: #f6dce0;
   border: 1px solid #ff4558;
   &.resolved {
-    background: #f4fff1;
-    border-color: #4caf50;
+    background: #f4fff1 !important;
+    border-color: #4caf50 !important;
+    color: black !important;
+    mat-panel-title,
+    mat-panel-description {
+      color: black !important;
+    }
   }
 }
 .error {
@@ -22,8 +27,8 @@ mat-expansion-panel {
 
 .selected {
   border-radius: 5px;
-  border: 1px solid green;
-  background-color: #44b408;
+  border: 1px solid green !important;
+  background-color: #44b408 !important;
   color: white;
   mat-icon {
     color: white;

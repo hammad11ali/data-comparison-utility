@@ -8,3 +8,12 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.resolved {
+  background-color: #44b408 !important;
+  color: white !important;
+  mat-panel-title,
+  mat-panel-description {
+    color: white;
+  }
+}

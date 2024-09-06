@@ -1,0 +1,5 @@
+<div class="row" [class.removed]="!isEnabled">
+  <span>Key: {{comparisonResult.key}}</span>
+  <span>Value: {{value}}</span>
+  <mat-slide-toggle [checked]="true"  (change)="onChange($event)"></mat-slide-toggle>
+</div>

@@ -110,10 +110,10 @@ export class ComparisonUtilityService {
       else if(this.comparisonResults[i].type===ConflictType.MISMATCH){
         object[this.comparisonResults[i].key]=this.getMergeResult(i, this.comparisonResults[i].sourceValue);
       }
-      else if(this.comparisonResults[i].type===ConflictType.EXTRA){
+      else if(this.comparisonResults[i].type===ConflictType.EXTRA &&this.comparisonResults[i].MergeStatus!==MergeStatus.None ){
         object[this.comparisonResults[i].key]=this.comparisonResults[i].sourceValue;
       }
-      else if(this.comparisonResults[i].type===ConflictType.MISSING){
+      else if(this.comparisonResults[i].type===ConflictType.MISSING &&this.comparisonResults[i].MergeStatus!==MergeStatus.None){
         object[this.comparisonResults[i].key]=this.comparisonResults[i].targetValue;
       }
     }
@@ -144,5 +144,24 @@ export class ComparisonUtilityService {
   }
   get None():ComparisonResult[]{
     return this.comparisonResults.filter((item)=>item.type===ConflictType.None);
+  }
+
+  objectToXmlString(obj:any){
+    let xmlString='<appsettings>\n';
+    for(let key in obj){
+      xmlString+=`\t<add key="${key}" value="${obj[key]}" />\n`;
+    }
+    xmlString+='</appsettings>\n\n';
+    return xmlString;
+  }
+
+  objectTostring(type:string){
+    if(type==='.json'){
+      return JSON.stringify(this.finalObject, null, 2);
+    }
+    else if(type==='.xml'){
+      return this.objectToXmlString(this.finalObject);
+    }
+    return '';
   }
 }

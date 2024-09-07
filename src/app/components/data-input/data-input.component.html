@@ -1,5 +1,12 @@
 
   <div class="input-area">
-    <app-file-input></app-file-input>
-    <textarea type="text" ></textarea>
+    <app-file-input (fileChange)="onFileChange($event)"></app-file-input>
+    @if (type==ContentSource.SOURCE) {
+      <textarea type="text"
+        [(ngModel)]="dataComparisonService.sourceContent" ></textarea>
+    }
+    @else {
+      <textarea type="text"
+        [(ngModel)]="dataComparisonService.targetContent" ></textarea>
+    }
   </div>

@@ -10,23 +10,15 @@ export class FileParserService {
     private storage:StorageService
   ) { }
 
-  parseFile(file:any, fileType:string) {
-    if (fileType==='.json') {
-      return this.parseJson(file);
-    } else if (fileType==='.xml') {
-      return this.parseXml(file);
-    }
-    return null;
-  }
-  parseJson(file:any) {
-    this.storage.store(StorageKeys.FileType,'.json');
+  parseFile(file:any) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsText(file);
       reader.onload = (event) => {
         try {
           let result=event?.target?.result?.toString()??'';
-          result=this.removeComments(result);
+          result=this.removeJsonComments(result);
+          result=this.removeXmlComments(result);
           resolve(result);
         } catch (error) {
           reject(error);
@@ -34,25 +26,13 @@ export class FileParserService {
       };
     });
   }
-  removeComments(str:string){
+  removeJsonComments(str:string){
     return str.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1');
   }
-
-  parseXml(file:any) {
-    this.storage.store(StorageKeys.FileType,'.xml');
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = (event) => {
-        try {
-          let result=event?.target?.result?.toString()??'' ;
-          resolve(result);
-        } catch (error) {
-          reject(error);
-        }
-      };
-    });
+  removeXmlComments(str:string){
+    return str.replace(/<!--[\s\S]*?-->/g, '');
   }
+
   jsonStrongtoObject(json:string){
     return JSON.parse(json);
   }

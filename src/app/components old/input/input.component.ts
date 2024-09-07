@@ -55,7 +55,7 @@ export class InputComponent {
   readFile() {
     if (this.file && this.selectedFileType) {
       this.fileParserService
-        .parseFile(this.file, this.selectedFileType)
+        .parseFile(this.file)
         ?.then((result: any) => {
           this.content = result + '\n\n\n';
           this.contentChange.emit(this.content);

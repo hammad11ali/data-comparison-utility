@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FileParserService } from './file-parser.service';
+import { StorageKeys, StorageService } from './storage.service';
 export enum ContentSource {
   SOURCE = 'SOURCE',
   TARGET = 'TARGET',
 }
-export type conflictingResult =
-  | { oldValue: any; newValue: any }
-  | ComparisonResult;
+export type conflictingResult = ComparisonResult|{ oldValue: any; newValue: any };
 
 export enum ResolutionType {
   KEEP_SOURCE = 'KEEP_SOURCE',
@@ -23,6 +22,7 @@ export type ResolutionResult = {
 export type ComparisonValue = {
   value: any | conflictingResult;
   resolution?: ResolutionResult;
+  nested?: boolean;
 };
 
 export type Resolution = Record<string, ResolutionResult>;
@@ -43,31 +43,44 @@ export class DataComparisonService {
   sourceContent = '';
   targetContent = '';
   comparisonResult: ComparisonResult | undefined;
-  constructor(private fileParser: FileParserService) {}
+  constructor(private fileParser: FileParserService, private storage:StorageService) {
+    this.sourceContent = this.storage.get(StorageKeys.SOURCE_DATA) || '';
+    this.targetContent = this.storage.get(StorageKeys.TARGET_DATA) || '';
+  }
+
+  saveContent() {
+    this.storage.store(StorageKeys.SOURCE_DATA, this.sourceContent);
+    this.storage.store(StorageKeys.TARGET_DATA, this.targetContent);
+  }
 
   createComparisonObject() {
     const sourceObject = this.fileParser.jsonStrongtoObject(this.sourceContent);
     const targetObject = this.fileParser.jsonStrongtoObject(this.targetContent);
-    // console.log('Source Object:',JSON.stringify(sourceObject));
-    // console.log('Target Object:',JSON.stringify(targetObject));
-
     const result = this.compareObjects(sourceObject, targetObject);
-    console.log('Comparison Result:', JSON.stringify(result));
+    console.log('Comparison Result:', result);
+    this.comparisonResult = result;
   }
-  compare(key: string, oldVal: any, newVal: any): conflictingResult {
-    let result: { oldValue: any; newValue: any } | ComparisonResult;
-    if (
+  compare(key: string, oldVal: any, newVal: any,comparisonResult:ComparisonResult) {
+     if (
       typeof oldVal === 'object' &&
       typeof newVal === 'object' &&
       oldVal !== null &&
       newVal !== null
     ) {
-      const nestedResult = this.compareObjects(oldVal, newVal);
-      result = nestedResult;
-    } else {
-      result = { oldValue: oldVal, newValue: newVal };
+      let result = this.compareObjects(oldVal, newVal);
+      if(result.addedKeys || result.removedKeys || result.conflictingKeys){
+        comparisonResult.conflictingKeys[key] = { value: result, nested: true };
+      }
+      else{
+        comparisonResult.same[key]=oldVal;
+      }
     }
-    return result;
+    else if (oldVal !== newVal) {
+      comparisonResult.conflictingKeys[key]  ={value: { oldValue: oldVal, newValue: newVal }};
+    }
+    else{
+      comparisonResult.same[key]=oldVal;
+    }
   }
   compareObjects(
     oldObj: Record<string, any>,
@@ -84,12 +97,9 @@ export class DataComparisonService {
     for (const key in oldObj) {
       if (!(key in newObj)) {
         result.removedKeys[key] = { value: oldObj[key] };
-      } else if (oldObj[key] !== newObj[key]) {
-        result.conflictingKeys[key] = {
-          value: this.compare(key, oldObj[key], newObj[key]),
-        };
-      } else {
-        result.same[key] = oldObj[key];
+      }
+      else {
+        this.compare(key, oldObj[key], newObj[key],result);
       }
     }
     for (const key in newObj) {
@@ -100,4 +110,5 @@ export class DataComparisonService {
 
     return result;
   }
+
 }

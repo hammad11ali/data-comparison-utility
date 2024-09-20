@@ -1,0 +1,28 @@
+<div>
+  <mat-radio-group
+    [(ngModel)]="selectedOption"
+    (ngModelChange)="onRadioChange()"
+  >
+    <mat-radio-button value="old"
+      ><p>
+        <strong>Old Value:</strong> {{ comparisonValue.value.oldValue }}
+      </p></mat-radio-button
+    >
+    <mat-radio-button value="new">
+      <p>
+        <strong>New Value:</strong> {{ comparisonValue.value.newValue }}
+      </p></mat-radio-button
+    >
+    <mat-radio-button value="custom">Use Custom Value</mat-radio-button>
+  </mat-radio-group>
+  @if(selectedOption === 'custom') {
+  <mat-form-field appearance="fill">
+    <mat-label>Custom Value</mat-label>
+    <input
+      matInput
+      [(ngModel)]="customValue"
+      (ngModelChange)="onInputChange()"
+    />
+  </mat-form-field>
+  }
+</div>

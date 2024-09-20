@@ -7,17 +7,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.resolved {
-  background-color: #44b408 !important;
-  color: white !important;
-  mat-panel-title,
-  mat-panel-description {
-    color: white;
-  }
-  mat-icon {
-    color: white !important;
-  }
-}
 .select-panel mat-option {
   min-height: 42px;
 }
@@ -25,4 +14,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.not-resolved {
+  background: #ef9a9a;
+}
+.resolved {
+  background: #a5d6a7;
+}
+
+mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid #e3e2e5 !important;
 }

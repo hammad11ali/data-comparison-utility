@@ -1,1 +1,38 @@
-<p>comparison-result works!</p>
+@if(comparisonResult) {
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header> Conflicting Keys</mat-expansion-panel-header>
+    @for (item of ConflictingResults; track $index) {
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>
+            {{
+              !comparisonResult.conflictingKeys[item].resolution
+                ? "report"
+                : "verified"
+            }}
+          </mat-icon>
+          {{ item }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <span>
+            {{ getConflictingKeyValue(item) }}
+          </span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      @if (comparisonResult.conflictingKeys[item].nested) {
+      <app-comparison-result
+        [comparisonResult]="comparisonResult.conflictingKeys[item].value"
+      />
+      }
+      @else{
+        <app-conficting-key-resolution
+          [comparisonValue]="comparisonResult.conflictingKeys[item]"
+          />
+      }
+    </mat-expansion-panel>
+    }
+  </mat-expansion-panel>
+</mat-accordion>
+}
